@@ -1,4 +1,4 @@
-package ru.practicum;
+package ru.practicum.exeption;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,8 +29,9 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleBadRequest(final DateTimeParseException exception) {
-        return new ErrorResponse
-                (exception.getMessage());
+        return new ErrorResponse(
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler
