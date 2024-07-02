@@ -1,15 +1,56 @@
-version: '3.1'
+# версия Docker Compose
+version: '3.8'
+# имена и описания контейнеров, которые должны быть развёрнуты
 services:
-  stats-server:
+  # описание контейнера stats
+  stats:
+    build:
+      context: ./stats/stats-service
+      dockerfile: ./Dockerfile
+    # имя контейнера
+    container_name: stats-container
+    # проброс портов
     ports:
       - "9090:9090"
+    # "зависит от",
+    depends_on:
+      - stats-db
+    # переменные окружения
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
 
+  # описание контейнера stats-db
   stats-db:
     image: postgres:14-alpine
+    # имя контейнера
+    container_name: stats-db-container
+    # проброс портов
+    ports:
+      - "5432:5432"
+    # переменные окружения
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=stats
 
+  # описание контейнера ewm-service
   ewm-service:
+    build:
+      context: ./ewm-service
+      dockerfile: ./Dockerfile
+    # имя контейнера
+    container_name: ewm-service-container
+    # проброс портов
     ports:
       - "8080:8080"
 
+  # описание контейнера ewm-db
   ewm-db:
     image: postgres:14-alpine
+    # имя контейнера
+    container_name: ewm-db-container
+    # проброс портов
+    ports:
+      - "5430:5430"
