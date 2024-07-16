@@ -3,7 +3,7 @@ package ru.practicum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.exeption.BadRequestException;
+import ru.practicum.exception.BadRequestException;
 import ru.practicum.model.EndpointHit;
 import ru.practicum.model.Stats;
 import ru.practicum.model.ViewStats;
