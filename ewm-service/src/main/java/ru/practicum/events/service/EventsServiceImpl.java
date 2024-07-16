@@ -298,7 +298,6 @@ public class EventsServiceImpl implements EventsService {
                                 requestRepository.findAllByEventIdAndStatusEquals(event.getId(),
                                         RequestStatus.CONFIRMED).size()
                                         < event.getParticipantLimit()))
-                        // .filter(Objects::nonNull)
                         .map(this::setViewsAndConfirmedRequestsToEventsShortDto)
                         .collect(Collectors.toList());
             } else {

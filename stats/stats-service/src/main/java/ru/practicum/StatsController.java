@@ -2,6 +2,7 @@ package ru.practicum;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.model.EndpointHit;
 import ru.practicum.model.ViewStats;
@@ -16,6 +17,7 @@ public class StatsController {
     private final StatsService statsService;
 
     @PostMapping("/hit")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addHit(@Valid @RequestBody EndpointHit endpointHit) {
         statsService.addHit(endpointHit);
     }
