@@ -1,17 +1,17 @@
 package ru.practicum.compilations.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.events.model.Event;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @Table(name = "compilations")
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,6 +21,7 @@ public class Compilation {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @Size(max = 50)
     private String title;
 
     @Column(nullable = false)

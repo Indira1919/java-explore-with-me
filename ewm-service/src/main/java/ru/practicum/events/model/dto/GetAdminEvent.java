@@ -6,7 +6,8 @@ import ru.practicum.events.model.enums.EventState;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetAdminEvent {

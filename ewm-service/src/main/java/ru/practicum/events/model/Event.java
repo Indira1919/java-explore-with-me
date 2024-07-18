@@ -1,20 +1,20 @@
 package ru.practicum.events.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.categories.model.Category;
 import ru.practicum.events.model.enums.EventState;
 import ru.practicum.users.model.User;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,6 +25,7 @@ public class Event {
     private Integer id;
 
     @Column(nullable = false)
+    @Size(min = 20, max = 2000)
     private String annotation;
 
     @ManyToOne
@@ -32,6 +33,7 @@ public class Event {
     private Category category;
 
     @Column(nullable = false)
+    @Size(min = 20, max = 7000)
     private String description;
 
     @Column(nullable = false)
@@ -64,5 +66,8 @@ public class Event {
     private Boolean requestModeration;
 
     @Column(nullable = false)
+    @Size(min = 3, max = 120)
     private String title;
+
+
 }

@@ -1,9 +1,6 @@
 package ru.practicum.events.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.events.model.enums.RequestStatus;
 import ru.practicum.users.model.User;
 
@@ -12,7 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "requests", schema = "public")
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.compilations.mapper.CompilationMapper;
 import ru.practicum.compilations.model.Compilation;
 import ru.practicum.compilations.model.dto.CompilationDto;
+import ru.practicum.compilations.model.dto.CompilationShortDto;
 import ru.practicum.compilations.model.dto.NewCompilationDto;
 import ru.practicum.compilations.model.dto.UpdateCompilationRequest;
 import ru.practicum.compilations.repository.CompilationRepository;
@@ -18,6 +19,7 @@ import ru.practicum.exception.ObjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,8 +43,17 @@ public class CompilationsServiceImpl implements CompilationsService {
             compilations = compilationRepository.findAllByPinned(pinned, page);
         }
 
+        List<Integer> comp = new ArrayList<>();
         for (Compilation compilation : compilations) {
-            List<EventShortDto> eventsShortDto = compilation.getEvents()
+            comp.add(compilation.getId());
+        }
+
+        Map<Integer, List<Event>> compilationsShortDto = compilationRepository.findAllByIdIn(comp)
+                .stream()
+                .collect(Collectors.toMap(CompilationShortDto::getId, CompilationShortDto::getEvents));
+
+        for (Compilation compilation : compilations) {
+            List<EventShortDto> eventsShortDto = compilationsShortDto.get(compilation.getId())
                     .stream()
                     .map(EventMapper::toEventShortDto)
                     .collect(Collectors.toList());
