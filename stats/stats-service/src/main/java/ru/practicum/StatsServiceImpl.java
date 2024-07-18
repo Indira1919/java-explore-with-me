@@ -3,7 +3,7 @@ package ru.practicum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.exeption.BadRequestException;
+import ru.practicum.exception.BadRequestException;
 import ru.practicum.model.EndpointHit;
 import ru.practicum.model.Stats;
 import ru.practicum.model.ViewStats;
@@ -26,6 +26,10 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+
+        if (start == null || end == null) {
+            throw new BadRequestException("Необходимо указать дату начала и окончания");
+        }
 
         if (start.isAfter(end) || start.isEqual(end)) {
             throw new BadRequestException("Неверно введены даты");
