@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CompilationShortDto {
     Integer getId();
+
     List<Event> getEvents();
 }
