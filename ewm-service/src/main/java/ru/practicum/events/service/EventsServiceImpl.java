@@ -321,15 +321,19 @@ public class EventsServiceImpl implements EventsService {
                     .filter(event -> (event.getParticipantLimit() == 0 ||
                             event.getParticipantLimit() > confirmedRequests.get(event.getId())))
                     .map(EventMapper::toEventShortDto)
-                    .peek(i -> i.setConfirmedRequests(confirmedRequests.get(i.getId())))
-                    .peek(i -> i.setViews(Math.toIntExact(views.getOrDefault(i.getId(), 0L))))
+                    .peek(i -> {
+                        i.setConfirmedRequests(confirmedRequests.getOrDefault(i.getId(), 0));
+                        i.setViews(Math.toIntExact(views.getOrDefault(i.getId(), 0L)));
+                    })
                     .collect(Collectors.toList());
         } else {
             eventsShortDto = events
                     .stream()
                     .map(EventMapper::toEventShortDto)
-                    .peek(i -> i.setConfirmedRequests(confirmedRequests.getOrDefault(i.getId(), 0)))
-                    .peek(i -> i.setViews(Math.toIntExact(views.getOrDefault(i.getId(), 0L))))
+                    .peek(i -> {
+                        i.setConfirmedRequests(confirmedRequests.getOrDefault(i.getId(), 0));
+                        i.setViews(Math.toIntExact(views.getOrDefault(i.getId(), 0L)));
+                    })
                     .collect(Collectors.toList());
         }
 
@@ -448,8 +452,7 @@ public class EventsServiceImpl implements EventsService {
         LocalDateTime end = LocalDateTime.now();
         List<String> uris = events
                 .stream()
-                .map(Event::getId)
-                .map(id -> ("/events/" + id))
+                .map(event -> ("/events/" + event.getId()))
                 .collect(Collectors.toList());
 
         List<ViewStats> stats = statsService.getStats(start, end, uris, null);
